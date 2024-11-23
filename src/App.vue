@@ -2,12 +2,18 @@
   <div class="counter">
     <h1 class="counter__header">Counter value is:</h1>
     <div class="counter__box">
-      <h2 class="counter__value">0</h2>
-      <button>-</button>
-      <button>+</button>
+      <h2 class="counter__value">{{ count }}</h2>
+      <button @click="count -= 1">-</button>
+      <button @click="count += 1">+</button>
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+
+const count = ref(0);
+</script>
 
 <style>
 .counter {
