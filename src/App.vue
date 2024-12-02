@@ -15,6 +15,14 @@ const addNote = () => {
   notes.value.push({ id: Date.now(), desc: newNoteDesc.value });
   clearNewNoteDesc();
 };
+
+const formatDate = (timestamp) =>
+  new Date(timestamp).toLocaleDateString('ru-RU', {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 </script>
 
 <template>
@@ -25,9 +33,10 @@ const addNote = () => {
           name="desc"
           cols="50"
           rows="10"
-          placeholder="Введите описание заметки"
+          minlength="10"
+          placeholder="Введите описание заметки (минимум 10 символов)"
           @click.stop
-          v-model="newNoteDesc"
+          v-model.lazy.trim="newNoteDesc"
         ></textarea>
         <button type="submit" class="btn-save">save</button>
       </form>
@@ -37,16 +46,7 @@ const addNote = () => {
     <ul class="notepad__list">
       <li class="note" v-for="note of notes" :key="note.id">
         <span class="note__desc">{{ note.desc }}</span>
-        <span class="note__date">
-          {{
-            new Date(note.id).toLocaleDateString('ru-RU', {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })
-          }}</span
-        >
+        <span class="note__date"> {{ formatDate(note.id) }}</span>
       </li>
     </ul>
   </section>
