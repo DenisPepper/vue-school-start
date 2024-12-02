@@ -1,33 +1,43 @@
 <script setup>
-import { ref as setupRef } from 'vue';
+import { ref as useState } from 'vue';
 
-const showModal = setupRef(false);
+const showModal = useState(false);
+const newNoteDesc = useState('');
+const notes = useState([]);
 
 const toggleModal = () => (showModal.value = !showModal.value);
+
+const clearNewNoteDesc = () => (newNoteDesc.value = '');
+
+const addNote = () => {
+  if (!newNoteDesc.value) return;
+
+  notes.value.push({ id: Date.now(), desc: newNoteDesc.value });
+  clearNewNoteDesc();
+};
 </script>
 
 <template>
   <section class="notepad">
-    <div :class="`overlay ${showModal ? '' : 'visually-hidden'}`" @click="toggleModal">
-      <form class="modal">
-        <textarea name="desc" cols="50" rows="10" placeholder="Введите описание заметки"></textarea>
+    <div :class="`overlay ${showModal ? '' : 'visually-hidden'}`">
+      <form class="modal" @submit.prevent="addNote" @click="toggleModal">
+        <textarea
+          name="desc"
+          cols="50"
+          rows="10"
+          placeholder="Введите описание заметки"
+          @click.stop
+          v-model="newNoteDesc"
+        ></textarea>
         <button type="submit" class="btn-save">save</button>
       </form>
     </div>
     <h2 class="notepad__header">Notes</h2>
     <button type="button" class="btn-add-new" @click.prevent="toggleModal">+</button>
     <ul class="notepad__list">
-      <li class="note">
-        <span class="note__desc">Описание карточки 1</span>
-        <span class="note__date">01.02.2024</span>
-      </li>
-      <li class="note">
-        <span class="note__desc">Описание карточки 2</span>
-        <span class="note__date">01.02.2024</span>
-      </li>
-      <li class="note">
-        <span class="note__desc">Описание карточки 3</span>
-        <span class="note__date">01.02.2024</span>
+      <li class="note" v-for="note of notes" :key="note.id">
+        <span class="note__desc">{{ note.desc }}</span>
+        <span class="note__date">id: {{ note.id }}</span>
       </li>
     </ul>
   </section>
