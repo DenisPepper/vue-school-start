@@ -37,7 +37,16 @@ const addNote = () => {
     <ul class="notepad__list">
       <li class="note" v-for="note of notes" :key="note.id">
         <span class="note__desc">{{ note.desc }}</span>
-        <span class="note__date">id: {{ note.id }}</span>
+        <span class="note__date">
+          {{
+            new Date(note.id).toLocaleDateString('ru-RU', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          }}</span
+        >
       </li>
     </ul>
   </section>
@@ -101,7 +110,7 @@ const addNote = () => {
 }
 
 .note__date {
-  font-size: 1rem;
+  font-size: 0.7rem;
   font-weight: 700;
 }
 
