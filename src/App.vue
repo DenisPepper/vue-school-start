@@ -1,17 +1,21 @@
 <script setup>
-// setup = composition api
+import { ref as setupRef } from 'vue';
+
+const showModal = setupRef(false);
+
+const toggleModal = () => (showModal.value = !showModal.value);
 </script>
 
 <template>
   <section class="notepad">
-    <div class="overlay visually-hidden@">
+    <div :class="`overlay ${showModal ? '' : 'visually-hidden'}`" @click="toggleModal">
       <form class="modal">
         <textarea name="desc" cols="50" rows="10" placeholder="Введите описание заметки"></textarea>
         <button type="submit" class="btn-save">save</button>
       </form>
     </div>
     <h2 class="notepad__header">Notes</h2>
-    <button type="button" class="btn-add-new">+</button>
+    <button type="button" class="btn-add-new" @click.prevent="toggleModal">+</button>
     <ul class="notepad__list">
       <li class="note">
         <span class="note__desc">Описание карточки 1</span>
