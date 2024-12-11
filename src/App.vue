@@ -1,15 +1,22 @@
 <script setup>
 import quizesData from './data/quizes.json';
-import { ref as useState } from 'vue';
+import { ref as useState, watch } from 'vue';
 
 const quizes = useState(quizesData);
+const search = useState('');
+
+const filterQuizes = (value) => {
+  quizes.value = quizesData.filter((item) => item.name.toLowerCase().includes(value.toLowerCase()));
+};
+
+watch(search, filterQuizes);
 </script>
 
 <template>
   <div class="container">
     <header>
       <h1>Quize</h1>
-      <input type="text" placeholder="Search ..." />
+      <input v-model.lazy.trim="search" type="text" placeholder="Search ..." />
     </header>
     <ul class="options-container">
       <li class="card" v-for="quize of quizes" :key="quize.id">
