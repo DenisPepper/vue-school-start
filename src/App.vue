@@ -1,3 +1,10 @@
+<script setup>
+import quizesData from './data/quizes.json';
+import { ref as useState } from 'vue';
+
+const quizes = useState(quizesData);
+</script>
+
 <template>
   <div class="container">
     <header>
@@ -5,15 +12,11 @@
       <input type="text" placeholder="Search ..." />
     </header>
     <ul class="options-container">
-      <li class="card">
-        <img
-          class="card-img"
-          src="https://cdn0.youla.io/files/images/780_780/62/a8/62a87de4fac3891a4a0bb2f4-1.jpg"
-          alt="Math"
-        />
+      <li class="card" v-for="quize of quizes" :key="quize.id">
+        <img class="card-img" :src="quize.img" alt="Math" />
         <div class="card-text">
-          <h2 class="card-title">Math</h2>
-          <p>15 questions</p>
+          <h2 class="card-title">{{ quize.name }}</h2>
+          <p>{{ quize.questions.length }} questions</p>
         </div>
       </li>
     </ul>
@@ -64,7 +67,7 @@ header input {
 .card-img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 190px;
 }
 
 .card-text {
