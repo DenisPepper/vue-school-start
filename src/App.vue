@@ -1,6 +1,7 @@
 <script setup>
 import quizesData from './data/quizes.json';
 import { ref as useState, watch } from 'vue';
+import Card from './components/card/Card.vue';
 
 const quizes = useState(quizesData);
 const search = useState('');
@@ -19,6 +20,8 @@ watch(search, filterQuizes);
       <input v-model.lazy.trim="search" type="text" placeholder="Search ..." />
     </header>
     <ul class="options-container">
+      <Card v-for="quize of quizes" :key="quize.id" />
+      <!--
       <li class="card" v-for="quize of quizes" :key="quize.id">
         <img class="card-img" :src="quize.img" alt="Math" />
         <div class="card-text">
@@ -26,6 +29,7 @@ watch(search, filterQuizes);
           <p>{{ quize.questions.length }} questions</p>
         </div>
       </li>
+      -->
     </ul>
   </div>
 </template>
@@ -58,29 +62,5 @@ header input {
   display: flex;
   flex-wrap: wrap;
   margin-top: 40px;
-}
-
-/* CARD */
-.card {
-  width: 310px;
-  overflow: hidden;
-  border-radius: 2%;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 35px;
-  margin-right: 20px;
-  cursor: pointer;
-}
-
-.card-img {
-  display: block;
-  width: 100%;
-  height: 190px;
-}
-
-.card-text {
-  padding: 0 5px;
-}
-
-.card-title {
 }
 </style>
