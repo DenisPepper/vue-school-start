@@ -20,7 +20,7 @@ watch(search, filterQuizes);
       <input v-model.lazy.trim="search" type="text" placeholder="Search ..." />
     </header>
     <ul class="options-container">
-      <Card v-for="quize of quizes" :key="quize.id" />
+      <Card v-for="quize of quizes" :key="quize.id" :quize="quize" />
       <!--
       <li class="card" v-for="quize of quizes" :key="quize.id">
         <img class="card-img" :src="quize.img" alt="Math" />

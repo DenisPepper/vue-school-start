@@ -1,15 +1,14 @@
-<script setup></script>
+<script setup>
+import { defineProps } from 'vue';
+const { quize } = defineProps(['quize']);
+</script>
 
 <template>
   <li class="card">
-    <img
-      class="card-img"
-      src="https://cdn0.youla.io/files/images/780_780/62/a8/62a87de4fac3891a4a0bb2f4-1.jpg"
-      alt=""
-    />
+    <img class="card-img" :src="quize.img" alt="Math" />
     <div class="card-text">
-      <h2 class="card-title">Title</h2>
-      <p>count of questions</p>
+      <h2 class="card-title">{{ quize.name }}</h2>
+      <p>{{ quize.questions.length }} questions</p>
     </div>
   </li>
 </template>
